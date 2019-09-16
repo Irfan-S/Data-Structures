@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include "josephus.h"
 
-//TODO Solve Josephus
+//TODO Solve Josephus TBD
 
 
 // cll* init_cll(int num_persons){
