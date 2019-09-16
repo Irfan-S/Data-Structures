@@ -9,6 +9,7 @@ Queue* init_queue(){
     m->rear=NULL;
     m->front=m->rear;
     m->size=0;
+    
     return m;
 }
 
