@@ -4,12 +4,11 @@
 
 Queue* init_queue(){
 
-    printf("Initializing Queue..\n");
+    printf("Initializing Queue..\n\n");
     Queue* m = (Queue*)malloc(sizeof(Queue));
     m->rear=NULL;
     m->front=m->rear;
     m->size=0;
-    
     return m;
 }
 
@@ -23,6 +22,7 @@ Node* createNode(int ele){
 void pop(Queue* q){
     Node* tmp = q->front;
     if(tmp!=NULL){
+        printf("Removing from %d queue..\n",tmp->data);
         q->front=tmp->next;
     }
 
@@ -30,27 +30,29 @@ void pop(Queue* q){
 
 void push(Queue* q, int ele){
     Node* tmp = createNode(ele);
+    
     if(q->front==NULL){
+        printf("Pushing to %d to queue head..\n",ele);
         q->front=tmp;
         //tmp->next=q->rear;
         q->rear=tmp;
     }else{
+        printf("Pushing to %d to queue..\n",ele);
         q->rear->next = tmp;
         q->rear = tmp;
     }
 }
 
 void view(Queue* q){
+    printf("\nPrinting queue..\n");
     Node* tmp = q->front;
     if(tmp==NULL){
-        //q->rear=NULL;
-        //q->front=q->rear;
         printf("Empty\n");
     }else{
     while(tmp!=NULL){
         printf("%d ",tmp->data);
         tmp = tmp->next;
     }
-    printf("\n");
+    printf("\n\n");
     }
 }

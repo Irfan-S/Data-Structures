@@ -3,6 +3,7 @@
 #include"ll_queue.h"
 
 int main(){
+    printf("\n--------------------------------------------------------\n");
     Queue* m_queue = init_queue();
     while(1){
         char ch;
@@ -21,9 +22,11 @@ int main(){
                 view(m_queue);
                 break;
             case 'q':
+            printf("\n--------------------------------------------------------\n");
                 return 0;
             default:
                 break;
         }
     }
+    
 }
