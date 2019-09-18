@@ -1,12 +1,12 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "ll_queue.h"
+#include "cll_queue.h"
 
 Queue* init_queue(){
 
     printf("Initializing Queue..\n\n");
     Queue* m = (Queue*)malloc(sizeof(Queue));
-    m->rear=NULL;
+    m->rear=m->front;
     m->front=m->rear;
     m->size=0;
     return m;
@@ -24,6 +24,7 @@ void pop(Queue* q){
     if(tmp!=NULL){
         printf("Removing from %d queue..\n",tmp->data);
         q->front=tmp->next;
+        q->rear->next = q->front;
     }
 
 }
@@ -34,10 +35,12 @@ void push(Queue* q, int ele){
     if(q->front==NULL){
         printf("Pushing to %d to queue head..\n",ele);
         q->front=tmp;
+        tmp->next = q->front;
         q->rear=tmp;
     }else{
         printf("Pushing to %d to queue..\n",ele);
         q->rear->next = tmp;
+        tmp->next = q->front;
         q->rear = tmp;
     }
 }
@@ -48,10 +51,14 @@ void view(Queue* q){
     if(tmp==NULL){
         printf("Empty\n");
     }else{
-    while(tmp!=NULL){
-        printf("%d ",tmp->data);
-        tmp = tmp->next;
-    }
+        // if(tmp==q->rear){
+        //     printf("%d ",tmp->data);
+        // }
+        do{
+            printf("%d ",tmp->data);
+            tmp = tmp->next;
+        }
+        while(tmp!=q->front);
     printf("\n\n");
     }
 }

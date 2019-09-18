@@ -1,9 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include"ll_queue.h"
+#include"cll_queue.h"
 
 int main(){
-    printf("\n--------------------------------------------------------\n");
+    printf("\n--------------------------------------------------------\nCircular Queue using Linked List\n\n");
     Queue* m_queue = init_queue();
     while(1){
         char ch;
