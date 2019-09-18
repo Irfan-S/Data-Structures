@@ -6,8 +6,8 @@ Queue* init_queue(){
 
     printf("Initializing Queue..\n\n");
     Queue* m = (Queue*)malloc(sizeof(Queue));
-    m->rear=m->front;
-    m->front=m->rear;
+    m->rear=NULL;
+    m->front=NULL;
     m->size=0;
     return m;
 }
@@ -22,9 +22,17 @@ Node* createNode(int ele){
 void pop(Queue* q){
     Node* tmp = q->front;
     if(tmp!=NULL){
-        printf("Removing from %d queue..\n",tmp->data);
-        q->front=tmp->next;
-        q->rear->next = q->front;
+        //Fix issues
+        if(tmp->next==q->front){
+            printf("Removing last element %d from queue..\n",tmp->data);
+            q->front=NULL;
+            q->rear=NULL;
+        }
+        else if(tmp!=NULL){
+            printf("Removing %d from queue..\n",tmp->data);
+            q->front=tmp->next;
+            q->rear->next = q->front;
+        }
     }
 
 }
@@ -51,9 +59,6 @@ void view(Queue* q){
     if(tmp==NULL){
         printf("Empty\n");
     }else{
-        // if(tmp==q->rear){
-        //     printf("%d ",tmp->data);
-        // }
         do{
             printf("%d ",tmp->data);
             tmp = tmp->next;
