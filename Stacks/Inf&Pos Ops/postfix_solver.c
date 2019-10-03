@@ -44,7 +44,6 @@ void print_numstack(numstack* m){
     }
     printf("\n");
 }
-// Does not work for digits going into 10+, only works if the result of operations performed is always <10.
 // Uncommented code works for all digits.
 int postfix_solver(char* input,int sz){
 
