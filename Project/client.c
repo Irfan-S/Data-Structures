@@ -6,7 +6,7 @@ int main(){
     int max;
     scanf("%d",&max);
     printf("\n----------------------------------------\n");
-    printf("Options:\n1 edge-number vertex vertex- insert edge\n2 vertex vertex- delete edge\n3- print graph\n0- exit\n--------------------------------\n");
+    printf("Options:\n1 edge-number vertex vertex- insert edge\n2 vertex vertex- delete edge\n3- print graph\n4 starting edge- traverse edges\n0- exit\n--------------------------------\n");
     int ch = 1;
     multilist* multilist = init_multilist(max);
     while(ch){
@@ -14,6 +14,7 @@ int main(){
         int edge_number;
         int v1;
         int v2;
+        int start_edge;
         vertex* ver1;
         vertex* ver2;
         switch (ch)
@@ -41,6 +42,12 @@ int main(){
             print_multilist(multilist);
             break;
             
+        case 4:
+            scanf("%d",&start_edge);
+            printf("Traversing vertex links\n--------------------------------------\n");
+            traverse_vertex_links(multilist->edge_array[start_edge]);
+            printf("\n------------------------------------------------\n");
+            break;
         default:
             printf("Invalid choice, please retry...\n");
             break;

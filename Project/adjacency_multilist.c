@@ -1,6 +1,5 @@
 #include "headers.h"
 
-//TODO create basic vertex, youre creating an array of vertices without any edges.
 vertex* create_vertex(int number){
     vertex* v = malloc(sizeof(vertex));
     v->number = number;
@@ -17,14 +16,16 @@ edge_list* create_edge_list( vertex* start, vertex* end,multilist* multilist){
     temp->v1_link = NULL;
     temp->v2_link = NULL;
     for( int i=0;i<multilist->no_of_edges;i++){
-            if((multilist->edge_array[i])&&multilist->edge_array[i]->v1==end){
-                temp->v1_link = multilist->edge_array[i];
+            if((multilist->edge_array[i]) && (multilist->edge_array[i]->v1->number==start->number)){
+                multilist->edge_array[i]->v1_link =temp;
+                printf("Assigned a v1 link\n");
                 break;
             }
     }
     for(int i=0;i<multilist->no_of_edges;i++){
-            if((multilist->edge_array[i])&&multilist->edge_array[i]->v2==start){
-                temp->v2_link = multilist->edge_array[i];
+            if((multilist->edge_array[i])&&(multilist->edge_array[i]->v2->number==start->number)){
+                multilist->edge_array[i]->v2_link = temp;
+                printf("Assigned a v2 link\n");
                 break;
             }
     }
@@ -73,8 +74,8 @@ void print_multilist(multilist* multilist){
     printf("Printing vertices\n");
     for(int i=0;i<multilist->no_of_edges;i++){
         if(multilist->edge_array[i]){
-            printf("Edge between %d and %d",multilist->edge_array[i]->v1->number,multilist->edge_array[i]->v2->number);
-            printf("\n");
+            printf("Edge between %d and %d\n",multilist->edge_array[i]->v1->number,multilist->edge_array[i]->v2->number);
+            printf("Pointer 1 : %p and Pointer 2: %p\n",multilist->edge_array[i]->v1_link,multilist->edge_array[i]->v2_link);
         }else{
             printf("Empty vertex\n");
         }
@@ -82,7 +83,22 @@ void print_multilist(multilist* multilist){
     printf("----------------------------------\n");
 }
 
-//TODO to check if the links are connected properly
-void traverse_vertex_links(int start_vertex,multilist* multilist){
-    
+//TODO to check if the links are connected properly, still a little glitchy...
+void traverse_vertex_links(edge_list* start){
+    //printf("Current pointer position %p\n",start->v1_link);
+    if(start->v1_link!=NULL){
+        printf("Utilizing the first vertex ,Edge between %d and %d\n",start->v1->number,start->v2->number);
+        traverse_vertex_links(start->v1_link);
+        
+    }
+    if(start->v2_link!=NULL){
+        printf("Utilizing the second vertex ,Edge between %d and %d\n",start->v1->number,start->v2->number);
+        traverse_vertex_links(start->v2_link);
+    }
+    if(start->v1_link==NULL){
+        printf("Reached end of vertex 1 connections\n");
+    }
+    if(start->v2_link==NULL){
+        printf("Reached end of vertex 2 connections\n");
+    }
 }

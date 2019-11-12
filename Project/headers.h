@@ -28,6 +28,8 @@ typedef struct e_list{
 vertex* create_vertex(int data);
 edge_list* create_edge_list( vertex* start, vertex* end,multilist* multilist);
 multilist* init_multilist(int edge_count);
+
 void insert_edge(int edge_number, vertex* start, vertex* end,multilist* multilist);
 void delete_edge( vertex* start, vertex* end,multilist* multilist);
 void print_multilist(multilist* multilist);
+void traverse_vertex_links(edge_list* edge_list);
