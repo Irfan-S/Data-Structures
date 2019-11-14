@@ -2,54 +2,50 @@
 
 #define SIZE 26
 
-trie* init_trie(char* prev){
+trie* init_trie(){
+    //printf("Initializing new trie node\n");
     trie *pNode = NULL; 
   
     pNode = malloc(sizeof(trie)); 
-  
-    if (pNode) 
-    { 
+
         int i; 
   
         pNode->end_of_word = false; 
   
         for (i = 0; i < SIZE; i++) 
-            pNode->array[i] = NULL; 
-    } 
-    pNode->word_so_far = prev;
+            pNode->array[i] = NULL;  
+    // pNode->word_so_far = prev;
     return pNode; 
 }
 
 
-
 void insert(char* word, trie* tr){
-    char ch;
-    char* wrds = malloc(sizeof(char)*strlen(word));
-    trie* rover = tr;
-    for(int i=0;i<strlen(word);i++){
-        ch = word[i];
-        wrds[i]=ch;
-        
-        int index = atoi(ch)- atoi('a');
-        if(!rover->array[index]){
-            rover->array[i] = init_trie(wrds);
+    printf("Inserting %s\n------------------------------\n",word);
+    trie* temp = tr;
+    for(int i=0;word[i];i++){
+        if(temp->array[word[i]-'a']==NULL){
+            temp->array[word[i]-'a'] = init_trie(NULL);
         }
-        rover = rover->array[i];
+        temp = temp->array[word[i]-'a'];
     }
-    rover->end_of_word = true;
+    temp->end_of_word = true;
 }
 
-bool search(char* word, trie* tr){
-    char ch;
-    trie* rover = tr;
-    for(int i=0;i<strlen(word);i++){
-        ch = word[i];
-        
-        int index = atoi(ch)- atoi('a');
-        if(!rover->array[index]){
-            return false;
+void search(char* word, trie* tr){
+    printf("Searching for %s\n------------------------------\n",word);
+    trie* temp = tr;
+    for(int i=0;word[i];i++){
+        if(temp->array[word[i]-'a']){
+            temp = temp->array[word[i]-'a'];
         }
-        rover = rover->array[i];
+        else{
+            printf("Word not found\n------------------------------------\n");
+            return;
+        }
     }
-    return (rover!=NULL && rover->end_of_word);
+    if(temp->end_of_word){
+        printf("Word found\n------------------------------------\n");
+    }else{
+        printf("Word not found\n------------------------------------\n");
+    }
 }
