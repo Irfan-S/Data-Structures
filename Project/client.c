@@ -1,12 +1,12 @@
 #include "headers.h"
 
 int main(){
-    printf("Graph using Adjacency multi-list representation\n-----------------------------------\n");
+    printf("\n\nGraph using Adjacency multi-list representation\n\n-----------------------------------\n");
     printf("Enter the max number of edges in graph:");
     int max;
     scanf("%d",&max);
     printf("\n----------------------------------------\n");
-    printf("Options:\n1 edge-number vertex vertex- insert edge\n2 vertex vertex- delete edge\n3- print graph\n4 starting edge- traverse edges\n0- exit\n--------------------------------\n");
+    printf("\nOptions:\n1 edge-number vertex vertex- insert edge\n2 vertex vertex- delete edge\n3- print graph\n4 starting edge- traverse edges\n0- exit\n--------------------------------\n\n");
     int ch = 1;
     multilist* multilist = init_multilist(max);
     while(ch){
@@ -45,7 +45,7 @@ int main(){
         case 4:
             scanf("%d",&start_edge);
             printf("Traversing vertex links\n--------------------------------------\n");
-            traverse_vertex_links(multilist->edge_array[start_edge]);
+            traverse_vertex_links(1,multilist->edge_array[start_edge]);
             printf("\n------------------------------------------------\n");
             break;
         default:

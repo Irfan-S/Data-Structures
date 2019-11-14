@@ -49,3 +49,31 @@ void search(char* word, trie* tr){
         printf("Word not found\n------------------------------------\n");
     }
 }
+
+void delete(char* word, trie* root){
+    char *ch = malloc(sizeof(char)*(strlen(word)-1));
+    int i;
+    if(root->end_of_word = true && word == NULL){
+        root->end_of_word = false;
+        return;
+    }
+    else
+    {
+        for(i =1; i<strlen(word);i++){
+            ch[i-1]=word[i];
+        }
+        if(strlen(word)== 1)
+            ch = NULL;
+        delete(ch,root->array[word[0]-'a']);  // goes to the last node
+        
+        int flag = 0;
+        for(i=0;i<SIZE ; i++){
+            if(root->array[word[0]-'a'])
+                flag =1;
+        }
+
+        if(flag == 0 && root->array)
+        
+    }
+    
+}
