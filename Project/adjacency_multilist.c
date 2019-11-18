@@ -1,5 +1,5 @@
 #include "headers.h"
-
+#define INFINITY 9999
 /**
  * Creates a basic vertex, which consists of the vertex number. 
  **/
@@ -99,7 +99,7 @@ void print_multilist(multilist* multilist){
             printf("Empty vertex\n");
         }
     }
-    printf("----------------------------------\n");
+    printf("\n----------------------------------\n");
 }
 
 /**
@@ -110,8 +110,110 @@ void traverse_vertex_links(int vert,edge_list* start){
     //DEBUG : printf("Current vertex pointer position %p\n",start);
     if(start!=NULL){
         printf("Utilizing the %d vertex ,Edge between %d and %d\n",vert,start->v1->number,start->v2->number);
-        traverse_vertex_links(1,start->v1_link);
-        traverse_vertex_links(2,start->v2_link);
-        
+        traverse_vertex_links(start->v1->number,start->v1_link);
+        traverse_vertex_links(start->v2->number,start->v2_link);
     }
 }
+
+/**
+ * Generates the indices which represent the directed adjacency matrix.
+ * Used to implement dijkastra's shortest path
+ **/
+void generate_indices(int vert,edge_list* start,int ** G){
+    if(start!=NULL){
+        G[start->v1->number][start->v2->number] = 1;
+        generate_indices(start->v1->number,start->v1_link,G);
+        generate_indices(start->v2->number,start->v2_link,G); 
+    }
+}
+
+
+int** create_matrix(int size){
+    int ** G = malloc(size*sizeof(int*));
+    for(int i=0;i<size;i++){
+        G[i] = (int*)malloc(size*sizeof(int));
+    }
+    return G;
+}
+
+void print_matrix(int** m,int r){
+    printf("Matrix is:\n");
+    for(int i=0;i<r;i++){
+        for(int j =0;j<r;j++){
+            printf("%d ", m[i][j]);
+        }
+        printf("\n");
+    }
+}
+
+void dijkstra(int** G,int n,int startnode)
+{
+ 
+	int cost[n][n],distance[n],pred[n];
+	int visited[n],count,mindistance,nextnode,i,j;
+	
+	//pred[] stores the predecessor of each node
+	//count gives the number of nodes seen so far
+	//create the cost matrix
+	for(i=0;i<n;i++)
+		for(j=0;j<n;j++)
+			if(G[i][j]==0)
+				cost[i][j]=INFINITY;
+			else
+				cost[i][j]=G[i][j];
+	
+	//initialize pred[],distance[] and visited[]
+	for(i=0;i<n;i++)
+	{
+		distance[i]=cost[startnode][i];
+		pred[i]=startnode;
+		visited[i]=0;
+	}
+	
+	distance[startnode]=0;
+	visited[startnode]=1;
+	count=1;
+	
+	while(count<n-1)
+	{
+		mindistance=INFINITY;
+		
+		//nextnode gives the node at minimum distance
+		for(i=0;i<n;i++)
+			if(distance[i]<mindistance&&!visited[i])
+			{
+				mindistance=distance[i];
+				nextnode=i;
+			}
+			
+			//check if a better path exists through nextnode			
+			visited[nextnode]=1;
+			for(i=0;i<n;i++)
+				if(!visited[i])
+					if(mindistance+cost[nextnode][i]<distance[i])
+					{
+						distance[i]=mindistance+cost[nextnode][i];
+						pred[i]=nextnode;
+					}
+		count++;
+	}
+ 
+	//print the path and distance of each node
+	for(i=0;i<n;i++)
+		if(i!=startnode)
+		{
+			printf("\nDistance of node%d=%d",i,distance[i]);
+			printf("\nPath=%d",i);
+			
+			j=i;
+			do
+			{
+				j=pred[j];
+				printf("<-%d",j);
+			}while(j!=startnode);
+            printf("\n");
+	}
+}
+
+
+
